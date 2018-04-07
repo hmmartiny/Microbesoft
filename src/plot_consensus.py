@@ -3,6 +3,7 @@
 from consensus import *
 import matplotlib.pyplot as plt
 import numpy as np
+from PIL import Image
 
 def readAlignment(alignment_file):
 	with open(alignment_file) as f:
@@ -24,9 +25,8 @@ def readAlignment(alignment_file):
 
 	return data_dict
 
-#print(len(consensusFreq))
 
-def consensusPlot(consensus_freqs, color):
+def consensusPlot(image, consensus_freqs, color, x, y):
   '''Plot the most frequent amino acid at each position'''
   fig = plt.figure()
   ax = fig.add_subplot(111)
@@ -44,5 +44,9 @@ def consensusPlot(consensus_freqs, color):
       top='off',         # ticks along the top edge are off
       labelbottom='off') # labels along the bottom edge are off
  
-  plt.show()
+  plt.savefig('consensus.png')
+
+  im = Image.open('consensus.png')
+  image.paste(im, (x, y))
+
  
