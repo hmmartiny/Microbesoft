@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 from consensus import *
-from visualize import *
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -25,11 +24,6 @@ def readAlignment(alignment_file):
 
 	return data_dict
 
-alnSequences = readAlignment('../data/aln_picorna.txt')
-
-consensusSeq, consensusFreq = consensus(alnSequences.values())
-
-findConsensus(alnSequences.values())
 #print(len(consensusFreq))
 
 def consensusPlot(consensus_freqs, color):
@@ -50,4 +44,3 @@ def consensusPlot(consensus_freqs, color):
  
   plt.show()
  
-consensusPlot(consensusFreq, 'black')
