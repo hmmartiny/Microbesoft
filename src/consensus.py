@@ -39,7 +39,7 @@ def findConsensus(sequences):
     n_length = len(list(sequences)[0])      # sequence length
 
     # convert sequences to giant matrix
-    sequences = [np.asarray(list(sequence)) for sequence in sequences]
+    sequences = [np.asarray(list(sequence.upper())) for sequence in sequences]
     sequence_matrix = np.vstack(sequences)
 
     # get aa frequences at each position
