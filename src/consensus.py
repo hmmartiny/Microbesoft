@@ -39,7 +39,7 @@ def findConsensus(sequences):
     n_length = len(list(sequences)[0])      # sequence length
 
     # convert sequences to giant matrix
-    sequences = [np.asarray(list(sequence)) for sequence in sequences]
+    sequences = [np.asarray(list(sequence.upper())) for sequence in sequences]
     sequence_matrix = np.vstack(sequences)
 
     # get aa frequences at each position
@@ -53,4 +53,4 @@ def findConsensus(sequences):
 
     consensus_amino_acids = [AA_alphabet_gap[index] for index in consensus_aa_freqs]
 
-    print(len(consensus_amino_acids))
+    return consensus_amino_acids, consensus_aa_freqs
