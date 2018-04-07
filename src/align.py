@@ -5,6 +5,7 @@ import argparse
 import os
 import subprocess
 import numpy as np
+import consensus
 
 def get_args():
     
@@ -26,14 +27,18 @@ def add_ending(fname, ending):
 
 def yield_fasta(fname):
     with open(fname, 'r') as infile:
-        while True:
-            header = infile.readline()
-            sequence = infile.readline()
-            if not header or not sequence:
-                break  # EOF
-            header = header.strip().lstrip('>')
-            sequence = sequence.strip()
-            yield header, sequence
+        header = ''
+        sequence = ''
+        for line in infile:
+            line = line.strip()
+            if line.startswith('>'):
+                if header and sequence:
+                    yield header, sequence
+                header = line.lstrip('>')
+                sequence = ''
+            else:
+                sequence += line
+        yield header, sequence
 
 
 def read_fasta(fname):
@@ -66,8 +71,9 @@ def main(args):
     align(args.infile, args.outfile, n_sequences * 10)
     
     headers, sequences = read_fasta(args.outfile)
+    consensus_sequence, consensus_frequencies = consensus.consensus(sequences)
     
-    print(np.shape(headers), np.shape(sequences))
+    
 
 
 if __name__ == '__main__':
