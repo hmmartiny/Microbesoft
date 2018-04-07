@@ -77,7 +77,6 @@ def main(args):
     headers.append('consensus')
     sequences.append(consensus_sequence)
     
-    # do stuff with consensus
     visualize.draw(headers, sequences)
 
 
