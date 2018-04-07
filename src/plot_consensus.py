@@ -4,41 +4,21 @@ from consensus import *
 import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
-
-def readAlignment(alignment_file):
-	with open(alignment_file) as f:
-		content = f.readlines()
-
-	data_dict = {}
-	ID = None
-
-	for line in content:
-		if line.startswith('>'):
-			if ID is not None:
-				data_dict[ID] = aligned_seq
-			try:
-				ID = line.split('|')[1]
-			except IndexError:
-				ID = line.split('>')[1]
-			aligned_seq = []
-
-		else:
-			aligned_seq += list(line[:-1])
-
-	return data_dict
-
+import time
 
 def consensusPlot(image, consensus_freqs, color, x, y, width, height):
   '''Plot the most frequent amino acid at each position'''
   dpi = 150
   fig = plt.figure(figsize=(width/dpi, height/dpi), dpi=dpi)
   ax = fig.add_subplot(111)
-  ax.grid(False)
-  
-  #plotArray = np.asarray(list(enumerate(consensus_freqs))).T
+  #ax.grid(False)
+  ax.spines['right'].set_visible(False)
+  ax.spines['top'].set_visible(False)
+  ax.spines['bottom'].set_visible(False)
+  ax.set_aspect(2)
+  	
   x = list(range(consensus_freqs.shape[0]))
- 
-  ax.plot(x, consensus_freqs, '-', color=color)
+
  
   ax.fill_between(x, consensus_freqs, step="mid", alpha=.8, color=color)
  
@@ -49,10 +29,11 @@ def consensusPlot(image, consensus_freqs, color, x, y, width, height):
       top='off',         # ticks along the top edge are off
       labelbottom='off') # labels along the bottom edge are off
 
-  #plt.tight_layout()
-  plt.savefig('consensus.png')
-
-  #im = Image.open('consensus.png')
-  #image.paste(im, (x, y))
+  plt.tight_layout()
+  plt.savefig('consensus.png', bbox_inches="tight", pad_inches=0)
+  time.sleep(3)
+  
+  im = Image.open('consensus.png')
+  image.paste(im, (x, y))
 
  
