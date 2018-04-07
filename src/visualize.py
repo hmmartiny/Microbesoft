@@ -3,6 +3,11 @@
 
 from PIL import Image, ImageDraw, ImageFont
 
+AA_colors_cinema = {"A": "#c1ffc1", "B": "#ffffff", "C": "#50d433", "D": "#088446", "E": "#088446", "F": "#de94e3", 
+                    "G": "#c1ffc1", "H": "#191996", "I": "#91b4ff", "J": "#ffffff", "K": "#ffa500", "L": "#91b4ff",
+                    "M": "#91b4ff", "N": "#088446", "O": "#ffffff", "P": "#ffb6c1", "Q": "#088446", "R": "#ffa500",
+                    "S": "#ce0000", "T": "#ce0000", "U": "#ffffff", "V": "#91b4ff", "W": "#de94e3", "X": "#ffffff",
+                    "Y": "#de94e3", "Z": "#ffffff", "-": "#050505"}
 
 def draw_rectangle(drawer, x, y, size, color="blue"):
     """Draws centered text with background rectangle."""
@@ -71,19 +76,16 @@ def image_hstack(images):
     return img
 
 
-def draw(headers, sequences, font_path='../etc/Menlo.ttc', fontsize=50, pad=20):
+def draw(headers, sequences, font_path='etc/Menlo.ttc', fontsize=50, pad=20):
     
     font = ImageFont.truetype(font_path, size=fontsize)
 
-    AA_colors_cinema = {"A": "#c1ffc1", "B": "#ffffff", "C": "#50d433", "D": "#088446", "E": "#088446", "F": "#de94e3", 
-                        "G": "#c1ffc1", "H": "#191996 ", "I": "#91b4ff", "J": "#ffffff", "K": "#ffa500", "L": "#91b4ff",
-                        "M": "#91b4ff", "N": "#088446", "O": "#ffffff", "P": "#ffb6c1", "Q": "#088446", "R": "#ffa500",
-                        "S": "#ce0000", "T": "#ce0000", "U": "#ffffff", "V": "#91b4ff", "W": "#de94e3", "X": "#ffffff",
-                        "Y": "#de94e3", "Z": "#ffffff"}
-
     size = font.size + pad
+    print("making sequence image")
     sequence_image = draw_sequences(sequences, font, AA_colors_cinema, size)
+    print("making header image")
     header_image = draw_headers(headers, font, size)
+    print("stacking")
     img = image_hstack([header_image, sequence_image])
 
     img.save("test.png")
