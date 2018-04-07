@@ -4,6 +4,7 @@ import argparse
 import os
 import subprocess
 import consensus
+import visualize
 
 def get_args():
     
@@ -71,7 +72,8 @@ def main(args):
     headers, sequences = read_fasta(args.outfile)
     consensus_sequence, consensus_frequencies = consensus.consensus(sequences)
     
-    
+    # do stuff with consensus
+    visualize.draw(headers, sequences)
 
 
 if __name__ == '__main__':
