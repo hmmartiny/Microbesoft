@@ -26,9 +26,10 @@ def readAlignment(alignment_file):
 	return data_dict
 
 
-def consensusPlot(image, consensus_freqs, color, x, y):
+def consensusPlot(image, consensus_freqs, color, x, y, width, height):
   '''Plot the most frequent amino acid at each position'''
-  fig = plt.figure()
+  dpi = 150
+  fig = plt.figure(figsize=(width/dpi, height/dpi), dpi=dpi)
   ax = fig.add_subplot(111)
   
   plotArray = np.asarray(list(enumerate(consensus_freqs))).T
