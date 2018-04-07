@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 # coding=utf-8
-
 import argparse
 import os
 import subprocess
-import numpy as np
 import consensus
 
 def get_args():
