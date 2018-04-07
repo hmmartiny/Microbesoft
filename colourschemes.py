@@ -14,8 +14,9 @@ def create_colour_scheme(alphabet, colourscheme="hls"):
     """
     # Create a non-reduced alphabet dictionary (1 letter abbreviation == itself)
     all = dict(zip(gbmr4.keys(), gbmr4.keys()))
-    # List of all reduced alphabets from pepdata library
-    alphabets_available = ["all", "gbmr4", "sdm12", "hsdm17", "hp2", "murphy10", 
+    dna = {"A": "A", "C": "C", "T": "T", "G": "G"}
+    # List of all reduced alphabets from pepdata library + the all / dna alphabet
+    alphabets_available = ["all", "dna", "gbmr4", "sdm12", "hsdm17", "hp2", "murphy10", 
     "alex6", "aromatic2", "hp_vs_aromatic"]
     # If the alphabet is found
     if alphabet in alphabets_available:

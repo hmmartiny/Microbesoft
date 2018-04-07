@@ -56,9 +56,49 @@ def translate_dna_to_aa(dna_sequence, search_for_startcodon = True):
     if aa_sequence[-1] != "*":
         print("DNA sequence didn't end with a stopcodon.")
     else:
-        aa_sequence = aa_sequence[:-1]			# Remove stop "*" at the end		
+        aa_sequence = aa_sequence[:-1]          # Remove stop "*" at the end        
 
     return aa_sequence
 
 if __name__ == "__main__":    
     print(translate_dna_to_aa("AGCAGAAAAGTAATGAACAAAGTGATAACCTAATAA"))
+    
+    
+    
+try:
+    dna_file = open("data/primate_mtDNA_interleaved.fasta", "r")
+    aa_file = open("data/primate_mtDNA_interleaved_TRANSLATED.fasta", "w")
+except IOError as err:
+    print("Could not open file:", err)
+    sys.exit(1)
+
+header, dna, aa = None, "", ""
+for line in dna_file:
+    if line[0] == ">":                          # FASTA header, starts with ">"
+        # New header, so print previous header + translated AA sequence
+        if dna != "" and header != None:
+            print(header, "Amino Acid Sequence", file=aa_file)
+            aa = translate_dna_to_aa(dna, search_for_startcodon = False)
+            # Print AA sequence in rows of 60 characters
+            for i in range(0, len(aa), 60):
+                print(aa[i:i+60], file=aa_file)
+        
+        # Read in new header, empty sequence variables
+        header = line[:-1]
+        dna = ""
+        aa = ""
+    
+    else:
+        # Add line of DNA bases to the sequence so far
+        dna += line[:-1]
+
+# Print the last header and AA sequence    
+if dna != "" and header != None:
+    print(header, "Amino Acid Sequence", file=aa_file)        
+    aa = translate_dna_to_aa(dna, search_for_startcodon = False)
+    # Print AA sequence in rows of 60 characters
+    for i in range(0, len(aa), 60):
+        print(aa[i:i+60], file=aa_file)
+
+dna_file.close()
+aa_file.close()
