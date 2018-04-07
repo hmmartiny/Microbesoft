@@ -1,4 +1,4 @@
-PREFIX = /usr/local
+PREFIX = /Users/christian/Microbesoft/mafft
 LIBDIR = $(PREFIX)/libexec/mafft
 DESTDIR = 
 
