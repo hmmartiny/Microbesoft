@@ -4,6 +4,7 @@ import argparse
 import os
 import subprocess
 import consensus
+import visualize
 
 def get_args():
     
@@ -67,11 +68,15 @@ def main(args):
     print("Number of sequences:", n_sequences)
     
     align(args.infile, args.outfile, n_sequences * 10)
+    print("align complete")
     
     headers, sequences = read_fasta(args.outfile)
+    print("alignment read")
     consensus_sequence, consensus_frequencies = consensus.consensus(sequences)
+    print("consensus made")
     
-    
+    # do stuff with consensus
+    visualize.draw(headers, sequences)
 
 
 if __name__ == '__main__':
