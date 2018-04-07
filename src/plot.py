@@ -26,10 +26,10 @@ ax.grid(True)
 
 
 for i, (ID, aln_seq) in enumerate(data_dict.items()):
-	if i < 1:
+	if i < 3:
 		print(i, "/", len(data_dict), end='\r')
 		for j, aa in enumerate(aln_seq):
-			ax.scatter(j+1, i+1, color='black', marker='s', size=12)
+			ax.scatter(j+1, i+1, color='black', marker='s')
 	else:
 		break
 
