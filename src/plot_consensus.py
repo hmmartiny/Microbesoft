@@ -16,8 +16,10 @@ def readAlignment(alignment_file):
 		if line.startswith('>'):
 			if ID is not None:
 				data_dict[ID] = aligned_seq
-			
-			ID = line.split('|')[1]
+			try:
+				ID = line.split('|')[1]
+			except IndexError:
+				ID = line.split('>')[1]
 			aligned_seq = []
 
 		else:
@@ -31,12 +33,14 @@ def consensusPlot(image, consensus_freqs, color, x, y, width, height):
   dpi = 150
   fig = plt.figure(figsize=(width/dpi, height/dpi), dpi=dpi)
   ax = fig.add_subplot(111)
+  ax.grid(False)
   
-  plotArray = np.asarray(list(enumerate(consensus_freqs))).T
+  #plotArray = np.asarray(list(enumerate(consensus_freqs))).T
+  x = list(range(consensus_freqs.shape[0]))
  
-  ax.plot(plotArray[0,:], plotArray[1,:], '-', color=color)
+  ax.plot(x, consensus_freqs, '-', color=color)
  
-  ax.fill_between(plotArray[0,:], plotArray[1,:], step="mid", alpha=.8, color=color)
+  ax.fill_between(x, consensus_freqs, step="mid", alpha=.8, color=color)
  
   plt.tick_params(
       axis='x',          # changes apply to the x-axis
@@ -44,10 +48,11 @@ def consensusPlot(image, consensus_freqs, color, x, y, width, height):
       bottom='off',      # ticks along the bottom edge are off
       top='off',         # ticks along the top edge are off
       labelbottom='off') # labels along the bottom edge are off
- 
+
+  #plt.tight_layout()
   plt.savefig('consensus.png')
 
-  im = Image.open('consensus.png')
-  image.paste(im, (x, y))
+  #im = Image.open('consensus.png')
+  #image.paste(im, (x, y))
 
  
