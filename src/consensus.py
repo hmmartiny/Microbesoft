@@ -26,9 +26,9 @@ def consensus(sequences):
     consensus_amino_acids_index = np.argmax(frequency_matrix, axis=0)
     consensus_amino_acids = [AA_alphabet_gap[index] for index in consensus_amino_acids_index]
     # to string
-    consensus_amino_facids = ''.join(consensus_amino_acids)
+    consensus_amino_acids = ''.join(consensus_amino_acids)
     consensus_amino_acid_frequencies = []
-    for i in range(n_sequences):
+    for i in range(len(consensus_amino_acids)):
         consensus_amino_acid_frequencies.append(frequency_matrix[consensus_amino_acids_index[i], i])
 
     return consensus_amino_acids, consensus_amino_acid_frequencies
