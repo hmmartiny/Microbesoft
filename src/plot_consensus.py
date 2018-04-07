@@ -32,10 +32,22 @@ consensusSeq, consensusFreq = consensus(alnSequences.values())
 findConsensus(alnSequences.values())
 #print(len(consensusFreq))
 
-fig = plt.figure()
-ax = fig.add_subplot(111)
-plotArray = np.asarray(list(enumerate(consensusFreq))).T
-ax.plot(plotArray[0,:], plotArray[1,:], '-')
-ax.fill_between(plotArray[0,:], plotArray[1,:], step="mid", alpha=.2)
-ax.set_xticks(plotArray[0, :], list(consensusSeq))
-#plt.show()
+def consensusPlot(consensus_freqs, color):
+  '''Plot the most frequent amino acid at each position'''
+ 
+  plotArray = np.asarray(list(enumerate(consensus_freqs))).T
+ 
+  ax.plot(plotArray[0,:], plotArray[1,:], '-', color=color)
+ 
+  ax.fill_between(plotArray[0,:], plotArray[1,:], step="mid", alpha=.8, color=color)
+ 
+  plt.tick_params(
+      axis='x',          # changes apply to the x-axis
+      which='both',      # both major and minor ticks are affected
+      bottom='off',      # ticks along the bottom edge are off
+      top='off',         # ticks along the top edge are off
+      labelbottom='off') # labels along the bottom edge are off
+ 
+  plt.show()
+ 
+consensusPlot(consensusFreq, 'black')
