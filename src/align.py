@@ -4,6 +4,7 @@ import argparse
 import os
 import subprocess
 import consensus
+import visualize
 
 def get_args():
     
@@ -40,7 +41,7 @@ def yield_fasta(fname):
 
 
 def read_fasta(fname):
-    return list(zip(*yield_fasta(fname)))
+    return list(map(list,zip(*yield_fasta(fname))))
 
 
 def get_n_sequences(fname):
@@ -66,12 +67,17 @@ def main(args):
     n_sequences = get_n_sequences(args.infile)
     print("Number of sequences:", n_sequences)
     
+    print("create alignment")
     align(args.infile, args.outfile, n_sequences * 10)
     
+    print("read alignment result")
     headers, sequences = read_fasta(args.outfile)
+    print("make consensus")
     consensus_sequence, consensus_frequencies = consensus.consensus(sequences)
+    headers.append('consensus')
+    sequences.append(consensus_sequence)
     
-    
+    visualize.draw(headers, sequences)
 
 
 if __name__ == '__main__':
