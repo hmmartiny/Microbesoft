@@ -28,7 +28,9 @@ def readAlignment(alignment_file):
 
 def consensusPlot(consensus_freqs, color):
   '''Plot the most frequent amino acid at each position'''
- 
+  fig = plt.figure()
+  ax = fig.add_subplot(111)
+  
   plotArray = np.asarray(list(enumerate(consensus_freqs))).T
  
   ax.plot(plotArray[0,:], plotArray[1,:], '-', color=color)
