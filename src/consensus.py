@@ -53,4 +53,4 @@ def findConsensus(sequences):
 
     consensus_amino_acids = [AA_alphabet_gap[index] for index in consensus_aa_freqs]
 
-    print(len(consensus_amino_acids))
+    return consensus_amino_acids, consensus_aa_freqs
