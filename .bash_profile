@@ -1,1 +1,1 @@
-export PATH=$PWD/mafft:$PATH
+export PATH=$PWD/mafft/bin:$PATH
