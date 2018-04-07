@@ -12,7 +12,7 @@ AA_alphabet_gap = AA_alphabet + '-' + 'X'
 def consensus(sequences):
     """Get consensus sequence and conservation rate."""
     n_sequences = len(sequences)
-    sequences = [np.asarray(list(sequence.upper())) for sequence in sequences]
+    sequences = [np.asarray(list(sequence)) for sequence in sequences]
     sequence_matrix = np.vstack(sequences)
     
     # fill a matrix with the frequencies for each amino acid in the alphabet
