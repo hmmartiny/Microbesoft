@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 # coding=utf-8
 
+import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
 AA_colors_cinema = {"A": "#c1ffc1", "B": "#ffffff", "C": "#50d433", "D": "#088446", "E": "#088446", "F": "#de94e3", 
                     "G": "#c1ffc1", "H": "#191996", "I": "#91b4ff", "J": "#ffffff", "K": "#ffa500", "L": "#91b4ff",
                     "M": "#91b4ff", "N": "#088446", "O": "#ffffff", "P": "#ffb6c1", "Q": "#088446", "R": "#ffa500",
                     "S": "#ce0000", "T": "#ce0000", "U": "#ffffff", "V": "#91b4ff", "W": "#de94e3", "X": "#ffffff",
-                    "Y": "#de94e3", "Z": "#ffffff", "-": "#050505"}
+                    "Y": "#de94e3", "Z": "#ffffff"}
 
 def draw_rectangle(drawer, x, y, size, color="blue"):
     """Draws centered text with background rectangle."""
@@ -23,7 +24,16 @@ def draw_text(drawer, font, text, x, y, color="black", align='center'):
     drawer.text((x, y), text, fill=color, font=font)
 
 
-def draw_sequences(sequences, font, AA_colors, size):
+def draw_numbering(drawer, interval, font, size, x=0, y=0):
+    interval = np.arange(interval[0], interval[1])
+    for i in range(len(interval)):
+        if interval[i] % 5 != 0: continue
+        draw_x = x + i * size
+        draw_y = y + size/2
+        draw_text(drawer, font, str(interval[i]), draw_x, draw_y, align='left')
+
+
+def draw_sequences(drawer, sequences, interval, font, AA_colors, size, x=0, y=0):
     """ Creates an PIL Image object with a table of aligned sequences on with coloring.
     :param sequences: a list of strings that are aligned sequences.
     :param font: an ImageFont object for drawing.
@@ -31,36 +41,26 @@ def draw_sequences(sequences, font, AA_colors, size):
     :param pad: space from letter edge to box edge.
     :return: an Image object with the result drawn on.
     """
-    n_sequences = len(sequences)
-    sequence_length = len(sequences[0])
-    image_size = (sequence_length * size, n_sequences * size)
-    img = Image.new('RGB', size=image_size, color='white')
-    drawer = ImageDraw.Draw(img)
-    
     for i_sequence, sequence in enumerate(sequences):
-        for i_char, char in enumerate(sequence):
-            draw_rectangle(drawer, i_char * size + size/2, i_sequence * size + size/2, size, color=AA_colors[char])
-            draw_text(drawer, font, char, i_char * size + size/2, i_sequence * size + size/2)
+        for i_char, char in enumerate(sequence[interval[0]:interval[1]]):
+            char = char.upper()
+            color = AA_colors.get(char, 'white')
+            draw_x = x + i_char * size + size/2
+            draw_y = y + i_sequence * size + size/2
+            draw_rectangle(drawer, draw_x, draw_y, size, color=color)
+            draw_text(drawer, font, char, draw_x, draw_y)
 
-    return img
 
-
-def draw_headers(headers, font, size):
-    n_headers = len(headers)
-    headers_length = max(len(header) for header in headers)
-    image_size = (headers_length * size, n_headers * size)
-    img = Image.new('RGB', size=image_size, color='white')
-    drawer = ImageDraw.Draw(img)
-    
+def draw_headers(drawer, headers, font, size, x=0, y=0):
+    """:return width so we can draw the sequences after this."""
     max_width = 0
     for i_header, header in enumerate(headers):
-        draw_text(drawer, font, header, 0, i_header * size + size/2, align='left')
+        draw_text(drawer, font, header, x, y + i_header * size + size/2, align='left')
         width, _ = drawer.textsize(header, font)
         if width > max_width:
             max_width = width
     
-    img = img.crop((0, 0, max_width, img.height))
-    return img
+    return max_width
 
 
 def image_hstack(images):
@@ -76,17 +76,24 @@ def image_hstack(images):
     return img
 
 
-def draw(headers, sequences, font_path='etc/Menlo.ttc', fontsize=50, pad=20):
-    
+def draw(headers, sequences, font_path='etc/Menlo.ttc', fontsize=30, pad=10, max_width=200):
     font = ImageFont.truetype(font_path, size=fontsize)
-
     size = font.size + pad
-    print("making sequence image")
-    sequence_image = draw_sequences(sequences, font, AA_colors_cinema, size)
-    print("making header image")
-    header_image = draw_headers(headers, font, size)
-    print("stacking")
-    img = image_hstack([header_image, sequence_image])
+    n_sequences = len(sequences)
+    sequence_length = len(sequences[0])
+    n_parts = sequence_length // max_width + 1
+    part_height = (n_sequences + 1) * size
+    image_size = (min(sequence_length, max_width) * size, part_height * n_parts)
+    img = Image.new('RGB', size=image_size, color='white')
+    drawer = ImageDraw.Draw(img)
+    
+    for i_part in range(n_parts):
+        print("drawing part", i_part)
+        draw_y = i_part * part_height
+        header_width = draw_headers(drawer, headers, font, size, y=draw_y + size)
+        sequence_interval = [int(i_part*max_width), int(min((i_part+1)*max_width, sequence_length))]
+        draw_numbering(drawer, sequence_interval, font, size, x=header_width, y=draw_y)
+        draw_sequences(drawer, sequences, sequence_interval, font, AA_colors_cinema, size, x=header_width, y=draw_y + size)
 
     img.save("test.png")
 
