@@ -77,7 +77,7 @@ def main(args):
     headers.append('consensus')
     sequences.append(consensus_sequence)
     
-    visualize.draw(headers, sequences)
+    visualize.draw(headers, sequences, consensus_frequencies)
 
 
 if __name__ == '__main__':

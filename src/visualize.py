@@ -3,6 +3,7 @@
 
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
+from plot_consensus import consensusPlot
 
 AA_colors_cinema = {"A": "#c1ffc1", "B": "#ffffff", "C": "#50d433", "D": "#088446", "E": "#088446", "F": "#de94e3", 
                     "G": "#c1ffc1", "H": "#191996", "I": "#91b4ff", "J": "#ffffff", "K": "#ffa500", "L": "#91b4ff",
@@ -76,13 +77,16 @@ def image_hstack(images):
     return img
 
 
-def draw(headers, sequences, font_path='etc/Menlo.ttc', fontsize=30, pad=10, max_width=200):
+def draw(headers, sequences, consensus_frequencies, font_path='etc/Menlo.ttc', fontsize=30, pad=10, max_width=200):
     font = ImageFont.truetype(font_path, size=fontsize)
     size = font.size + pad
     n_sequences = len(sequences)
     sequence_length = len(sequences[0])
     n_parts = sequence_length // max_width + 1
-    part_height = (n_sequences + 1) * size
+    sequences_height = n_sequences * size
+    numbering_height = 1 * size
+    frequency_height = 3 * size
+    part_height = sequences_height + numbering_height + frequency_height
     image_size = (min(sequence_length, max_width) * size, part_height * n_parts)
     img = Image.new('RGB', size=image_size, color='white')
     drawer = ImageDraw.Draw(img)
@@ -90,10 +94,13 @@ def draw(headers, sequences, font_path='etc/Menlo.ttc', fontsize=30, pad=10, max
     for i_part in range(n_parts):
         print("drawing part", i_part)
         draw_y = i_part * part_height
-        header_width = draw_headers(drawer, headers, font, size, y=draw_y + size)
+        header_width = draw_headers(drawer, headers, font, size, y=draw_y + numbering_height)
         sequence_interval = [int(i_part*max_width), int(min((i_part+1)*max_width, sequence_length))]
         draw_numbering(drawer, sequence_interval, font, size, x=header_width, y=draw_y)
-        draw_sequences(drawer, sequences, sequence_interval, font, AA_colors_cinema, size, x=header_width, y=draw_y + size)
+        draw_sequences(drawer, sequences, sequence_interval, font, AA_colors_cinema, size, x=header_width, y=draw_y + numbering_height)
+        part_frequencies = np.asarray(consensus_frequencies)[sequence_interval[0]:sequence_interval[1]]
+        frequency_width = (sequence_interval[1] - sequence_interval[0]) * size
+        consensusPlot(img, part_frequencies, color='black', x=header_width, y=draw_y + sequences_height + numbering_height, width=frequency_width, height=frequency_height)
 
     img.save("test.png")
 
