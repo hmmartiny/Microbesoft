@@ -4,6 +4,7 @@ from consensus import *
 import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
+import time
 
 def consensusPlot(image, consensus_freqs, color, x, y, width, height):
   '''Plot the most frequent amino acid at each position'''
@@ -30,6 +31,7 @@ def consensusPlot(image, consensus_freqs, color, x, y, width, height):
 
   plt.tight_layout()
   plt.savefig('consensus.png', bbox_inches="tight", pad_inches=0)
+  time.sleep(3)
   
   im = Image.open('consensus.png')
   image.paste(im, (x, y))
