@@ -14,6 +14,19 @@ http://microbesoft.net/
 ## Prerequisites
 Download and install the MAFFT alignment tool from [source](https://mafft.cbrc.jp/alignment/software/source.html).
 
+Navigate to the correct folder
+```console
+cd ~/Microbesoft
+```
+Install python3 modules:
+with conda installed:
+```console
+conda install -r etc/requirements.txt -y
+```
+or with pip:
+```console
+pip install --file etc/requirements.txt
+```
 
 ## The script 
 ```console
@@ -26,12 +39,9 @@ The script takes the following arguments:
 - `-c --colors [optional]`: options are "all", "dna", "gbmr4", "sdm12", "hsdm17", "hp2", "murphy10", 
     "alex6", "aromatic2", "hp_vs_aromatic", "cinema".  Default is "cinema".
 - `-w --width [optional]`: width in characters of the sequence. Default is 200.
+- `-same --same_length [optional]`: flag to indicate that we try to create plot spanning multiple lines have the same length in each line.
 
 ## Example
-Navigate to the correct folder
-```
-cd ~/Microbesoft
-```
 Run the script
 ```console
 python src/align.py  -in data/ebola_virus_reduced.fasta -c cinema -w 100
