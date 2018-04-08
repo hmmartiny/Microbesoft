@@ -19,7 +19,7 @@ def create_colour_scheme(alphabet="cinema", colourscheme="hls"):
     # Default value, colouring scheme as used in the cinema alignment tool
     if alphabet == "cinema":
         return {"A": "#c1ffc1", "B": "#ffffff", "C": "#50d433", "D": "#088446",
-                "E": "#088446", "F": "#de94e3", "G": "#c1ffc1", "H": "#191996 ",
+                "E": "#088446", "F": "#de94e3", "G": "#c1ffc1", "H": "#191996",
                 "I": "#91b4ff", "J": "#ffffff", "K": "#ffa500", "L": "#91b4ff",
                 "M": "#91b4ff", "N": "#088446", "O": "#ffffff", "P": "#ffb6c1",
                 "Q": "#088446", "R": "#ffa500", "S": "#ce0000", "T": "#ce0000",
