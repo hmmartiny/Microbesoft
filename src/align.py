@@ -5,6 +5,7 @@ import os
 import subprocess
 import consensus
 import visualize
+import colourschemes
 
 def get_args():
     
@@ -78,7 +79,11 @@ def main(args):
     headers.append('consensus')
     sequences.append(consensus_sequence)
     
-    visualize.draw(headers, sequences, consensus_frequencies)
+    if args.colors:
+        colors = colourschemes.create_colour_scheme(args.colors)
+        visualize.draw(headers, sequences, consensus_frequencies, AA_colors=colors)
+    else:
+        visualize.draw(headers, sequences, consensus_frequencies)
 
 
 if __name__ == '__main__':

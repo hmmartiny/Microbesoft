@@ -23,7 +23,7 @@ def create_colour_scheme(alphabet, colourscheme="hls"):
         for keys in alphabet.keys():
             alphabet[keys] = colours[alphabet[keys]]
     else:
-        print("Colour input", userinput, "not available.")
+        print("Colour input", alphabet, "not available.")
         sys.exit(1)
     return alphabet 
     
