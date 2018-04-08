@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-from pepdata.reduced_alphabet import *
 import seaborn as sns
 import sys
+from reduced_alphabets import *
 
 def create_colour_scheme(alphabet, colourscheme="hls"):
     """
@@ -12,10 +12,7 @@ def create_colour_scheme(alphabet, colourscheme="hls"):
     depending on which similarity the user chooses
     https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2732308/
     """
-    # Create a non-reduced alphabet dictionary (1 letter abbreviation == itself)
-    all = dict(zip(gbmr4.keys(), gbmr4.keys()))
-    dna = {"A": "A", "C": "C", "T": "T", "G": "G"}
-    # List of all reduced alphabets from pepdata library + the all / dna alphabet
+    # List of all available alphabets from pepdata library + the all / dna alphabet
     alphabets_available = ["all", "dna", "gbmr4", "sdm12", "hsdm17", "hp2", "murphy10", 
     "alex6", "aromatic2", "hp_vs_aromatic"]
     # If the alphabet is found
@@ -23,9 +20,8 @@ def create_colour_scheme(alphabet, colourscheme="hls"):
         alphabet = eval(alphabet)
         alphabet_values = set(alphabet.values())
         colours = sns.color_palette(colourscheme, len(alphabet_values)).as_hex()
-        translation_dict = dict(zip(alphabet_values, colours))
         for keys in alphabet.keys():
-            alphabet[keys] = translation_dict[alphabet[keys]]
+            alphabet[keys] = colours[alphabet[keys]]
     else:
         print("Colour input", userinput, "not available.")
         sys.exit(1)
