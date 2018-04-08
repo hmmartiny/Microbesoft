@@ -12,7 +12,8 @@ def get_args():
     parser = argparse.ArgumentParser(description="Align a fasta file")
     parser.add_argument("-in", "--infile", required=True)
     parser.add_argument("-out", "--outfile", help='Outfile name. Default is infile with "align" added.')
-    parser.add_argument("-c", "--colors")
+    parser.add_argument("-c", "--colors", help="string to indicate the color scheme to use.")
+    parser.add_argument("-w", "--width", type=int, default=200, help="width in characters of the plot.")
     
     args = parser.parse_args()
     if not args.outfile:
@@ -81,9 +82,9 @@ def main(args):
     
     if args.colors:
         colors = colourschemes.create_colour_scheme(args.colors)
-        visualize.draw(headers, sequences, consensus_frequencies, AA_colors=colors)
+        visualize.draw(headers, sequences, consensus_frequencies, AA_colors=colors, max_width=args.width)
     else:
-        visualize.draw(headers, sequences, consensus_frequencies)
+        visualize.draw(headers, sequences, consensus_frequencies, max_width=args.width)
 
 
 if __name__ == '__main__':
