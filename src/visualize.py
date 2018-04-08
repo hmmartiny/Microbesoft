@@ -4,6 +4,7 @@
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 from plot_bars import plot_bars
+import math
 
 AA_colors_cinema = {"A": "#c1ffc1", "B": "#ffffff", "C": "#50d433", "D": "#088446", "E": "#088446", "F": "#de94e3", 
                     "G": "#c1ffc1", "H": "#191996", "I": "#91b4ff", "J": "#ffffff", "K": "#ffa500", "L": "#91b4ff",
@@ -77,13 +78,17 @@ def image_hstack(images):
     return img
 
 
-def draw(headers, sequences, consensus_frequencies, AA_colors=AA_colors_cinema, font_path='etc/Menlo.ttc', fontsize=30, pad=10, max_width=200):
-    font = ImageFont.truetype(font_path, size=fontsize)
-    size = font.size + pad
+def draw(headers, sequences, consensus_frequencies, AA_colors=AA_colors_cinema, font_path='etc/Menlo.ttc', fontsize=30, pad=10, max_width=200, same_length=False):
     n_sequences = len(sequences)
     sequence_length = len(sequences[0])
     header_length = max(len(header) for header in headers)
     n_parts = sequence_length // max_width + 1
+    if same_length:
+        max_width = int(math.ceil(sequence_length / n_parts))
+    
+    font = ImageFont.truetype(font_path, size=fontsize)
+    size = font.size + pad
+    
     sequences_height = n_sequences * size
     numbering_height = 1 * size
     frequency_height = 3 * size

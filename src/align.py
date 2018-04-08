@@ -16,12 +16,15 @@ def get_args():
     parser.add_argument("-p", "--plotfile", help='Plot outfile name. Default is infile with ending .png.')
     parser.add_argument("-c", "--colors", help="string to indicate the color scheme to use.", default='cinema')
     parser.add_argument("-w", "--width", type=int, default=200, help="width in characters of the plot.")
+    parser.add_argument("-same", "--same_length", action='store_true', 
+                        help="flag to indicate that we try to create plot spanning multiple lines have the same length "
+                             "in each line.")
     
     args = parser.parse_args()
     if not args.outfile:
         args.outfile = add_ending(args.infile, "align")
     if not args.plotfile:
-        args.outfile = change_extension(args.infile, ".png")
+        args.plotfile = change_extension(args.infile, ".png")
     
     return args
 
@@ -95,7 +98,7 @@ def main(args):
     sequences.append(consensus_sequence)
     
     colors = colourschemes.create_colour_scheme(args.colors)
-    img = visualize.draw(headers, sequences, consensus_frequencies, AA_colors=colors, max_width=args.width)
+    img = visualize.draw(headers, sequences, consensus_frequencies, AA_colors=colors, max_width=args.width, same_length=args.same_length)
     img.save(args.plotfile)
 
 

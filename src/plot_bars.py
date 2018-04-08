@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 
-import matplotlib.pyplot as plt
 from PIL import Image
 import time
 import numpy as np
+import matplotlib.pyplot as plt
+from sys import platform
+
+if platform.startswith('linux'):
+    plt.switch_backend('agg')
 
 
 def plot_bars(image, values, color, x, y, width, height):
@@ -21,7 +25,8 @@ def plot_bars(image, values, color, x, y, width, height):
 
     im = Image.open('consensus.png')
     # remove border from invisible axis
-    im = im.crop((4, 4, im.width - 4, im.height - 4))
+    crop = 2
+    im = im.crop((crop, crop, im.width - crop, im.height - crop))
     # resize to the wanted size
     im = im.resize((width, height), Image.ANTIALIAS)
     image.paste(im, (x, y))
