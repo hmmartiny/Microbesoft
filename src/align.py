@@ -6,6 +6,7 @@ import subprocess
 import consensus
 import visualize
 import colourschemes
+import sys
 
 def get_args():
     
@@ -33,7 +34,10 @@ def add_ending(fname, ending):
 def change_extension(fname, extension):
     if not extension.startswith('.'):
         extension = '.' + extension
-    root, _ = os.path.splitext(fname)
+    root, old_extension = os.path.splitext(fname)
+    if extension == old_extension:
+        sys.stderr.write("New extension cannot be the same as old extension.")
+        sys.exit(1)
     return root + extension
 
 
