@@ -8,6 +8,9 @@ The team members are:
 
 The purpose of this script is to make it easier to plot large datasets of gene sequences and add functionalities such as the consensus sequence.
 
+### Domain
+http://microbesoft.net/
+
 ## Prerequisites
 Download and install the MAFFT alignment tool from [source](https://mafft.cbrc.jp/alignment/software/source.html).
 
