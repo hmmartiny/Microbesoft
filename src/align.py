@@ -21,7 +21,7 @@ def get_args():
     if not args.outfile:
         args.outfile = add_ending(args.infile, "align")
     if not args.plotfile:
-        args.outfile = change_extension(args.infile, ".png")
+        args.plotfile = change_extension(args.infile, ".png")
     
     return args
 
