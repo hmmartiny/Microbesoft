@@ -5,7 +5,7 @@
 Amino acid groupings from
 'Reduced amino acid alphabets improve the sensitivity...' by
 Peterson, Kondev, et al.
-http://www.rpgroup.caltech.edu/publications/Peterson2008.pdf
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2732308/
 """
 
 def dict_from_list(groups):
@@ -27,8 +27,9 @@ hsdm17 = dict_from_list([
 ])
 
 """
-Other alphabets from
-http://bio.math-inf.uni-greifswald.de/viscose/html/alphabets.html
+Other alphabets originally from
+http://bio.math-inf.uni-greifswald.de/viscose/html/alphabets.html,
+which is currently unavailable, but incorporated in the pepdata package
 """
 
 # hydrophilic vs. hydrophobic
