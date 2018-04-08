@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 
-import matplotlib.pyplot as plt
 from PIL import Image
 import time
 import numpy as np
+import matplotlib.pyplot as plt
+from sys import platform
+
+if platform.startswith('linux'):
+    plt.switch_backend('agg')
 
 
 def plot_bars(image, values, color, x, y, width, height):
