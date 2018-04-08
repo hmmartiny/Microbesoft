@@ -36,3 +36,4 @@ Run the script
 ```console
 python src/align.py  -in data/ebola_virus_reduced.fasta -c cinema -w 100
 ```
+![alt text](etc/visualization.png)
