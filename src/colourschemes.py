@@ -17,7 +17,7 @@ def create_colour_scheme(alphabet="cinema", colourscheme="hls"):
     alphabets_available = ["cinema", "all", "dna", "gbmr4", "sdm12", "hsdm17", 
     "hp2", "murphy10", "alex6", "aromatic2", "hp_vs_aromatic"]
     # Default value, colouring scheme as used in the cinema alignment tool
-    if alphabet = "cinema":
+    if alphabet == "cinema":
         alphabet = {"A": "#c1ffc1", "B": "#ffffff", "C": "#50d433", "D": "#088446",
                     "E": "#088446", "F": "#de94e3", "G": "#c1ffc1", "H": "#191996 ",
                     "I": "#91b4ff", "J": "#ffffff", "K": "#ffa500", "L": "#91b4ff",
