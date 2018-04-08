@@ -17,7 +17,7 @@ def plot_bars(image, values, color, x, y, width, height):
     plt.ylim(0, 1)
     extent = ax.get_window_extent().transformed(fig.dpi_scale_trans.inverted())
     fig.savefig('consensus.png', bbox_inches=extent, pad_inches=0, dpi=dpi)
-    time.sleep(3)
+    time.sleep(2)
 
     im = Image.open('consensus.png')
     # remove border from invisible axis

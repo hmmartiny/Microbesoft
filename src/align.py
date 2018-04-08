@@ -11,6 +11,7 @@ def get_args():
     parser = argparse.ArgumentParser(description="Align a fasta file")
     parser.add_argument("-in", "--infile", required=True)
     parser.add_argument("-out", "--outfile", help='Outfile name. Default is infile with "align" added.')
+    parser.add_argument("-c", "--colors")
     
     args = parser.parse_args()
     if not args.outfile:

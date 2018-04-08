@@ -77,7 +77,7 @@ def image_hstack(images):
     return img
 
 
-def draw(headers, sequences, consensus_frequencies, font_path='etc/Menlo.ttc', fontsize=30, pad=10, max_width=200):
+def draw(headers, sequences, consensus_frequencies, AA_colors=AA_colors_cinema, font_path='etc/Menlo.ttc', fontsize=30, pad=10, max_width=200):
     font = ImageFont.truetype(font_path, size=fontsize)
     size = font.size + pad
     n_sequences = len(sequences)
@@ -98,7 +98,7 @@ def draw(headers, sequences, consensus_frequencies, font_path='etc/Menlo.ttc', f
         header_width = draw_headers(drawer, headers, font, size, y=draw_y + numbering_height)
         sequence_range = [int(i_part*max_width), int(min((i_part+1)*max_width, sequence_length))]
         draw_numbering(drawer, sequence_range, font, size, x=header_width, y=draw_y)
-        draw_sequences(drawer, sequences, sequence_range, font, AA_colors_cinema, size, x=header_width, y=draw_y + numbering_height)
+        draw_sequences(drawer, sequences, sequence_range, font, AA_colors, size, x=header_width, y=draw_y + numbering_height)
         part_frequencies = np.asarray(consensus_frequencies)[sequence_range[0]:sequence_range[1]]
         frequency_width = (sequence_range[1] - sequence_range[0]) * size
         plot_bars(img, part_frequencies, color='gray', x=header_width, y=draw_y + sequences_height + numbering_height, width=frequency_width, height=frequency_height)
@@ -106,7 +106,7 @@ def draw(headers, sequences, consensus_frequencies, font_path='etc/Menlo.ttc', f
     # remove the whitespace after plot that was made due to not knowing header text size
     img = img.crop((0, 0, int(header_width + min(sequence_length, max_width) * size), img.height))
 
-    img.save("test.png")
+    img.save("visualization.png")
 
 
 
