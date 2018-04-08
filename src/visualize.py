@@ -105,8 +105,7 @@ def draw(headers, sequences, consensus_frequencies, AA_colors=AA_colors_cinema, 
     
     # remove the whitespace after plot that was made due to not knowing header text size
     img = img.crop((0, 0, int(header_width + min(sequence_length, max_width) * size), img.height))
-
-    img.save("visualization.png")
+    return img
 
 
 
