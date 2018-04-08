@@ -18,13 +18,13 @@ def create_colour_scheme(alphabet="cinema", colourscheme="hls"):
     "hp2", "murphy10", "alex6", "aromatic2", "hp_vs_aromatic"]
     # Default value, colouring scheme as used in the cinema alignment tool
     if alphabet == "cinema":
-        alphabet = {"A": "#c1ffc1", "B": "#ffffff", "C": "#50d433", "D": "#088446",
-                    "E": "#088446", "F": "#de94e3", "G": "#c1ffc1", "H": "#191996 ",
-                    "I": "#91b4ff", "J": "#ffffff", "K": "#ffa500", "L": "#91b4ff",
-                    "M": "#91b4ff", "N": "#088446", "O": "#ffffff", "P": "#ffb6c1",
-                    "Q": "#088446", "R": "#ffa500", "S": "#ce0000", "T": "#ce0000",
-                    "U": "#ffffff", "V": "#91b4ff", "W": "#de94e3", "X": "#ffffff",
-                    "Y": "#de94e3", "Z": "#ffffff"}
+        return {"A": "#c1ffc1", "B": "#ffffff", "C": "#50d433", "D": "#088446",
+                "E": "#088446", "F": "#de94e3", "G": "#c1ffc1", "H": "#191996 ",
+                "I": "#91b4ff", "J": "#ffffff", "K": "#ffa500", "L": "#91b4ff",
+                "M": "#91b4ff", "N": "#088446", "O": "#ffffff", "P": "#ffb6c1",
+                "Q": "#088446", "R": "#ffa500", "S": "#ce0000", "T": "#ce0000",
+                "U": "#ffffff", "V": "#91b4ff", "W": "#de94e3", "X": "#ffffff",
+                "Y": "#de94e3", "Z": "#ffffff"}
     # If the alphabet is found in the reduced alphabets file:
     if alphabet in alphabets_available:
         alphabet = eval(alphabet)
