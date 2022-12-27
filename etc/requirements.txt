@@ -28,7 +28,7 @@ requests==2.18.4
 ruamel-yaml==0.15.35
 scipy==1.0.1
 seaborn==0.8.1
-setuptools==38.4.0
+setuptools==65.5.1
 sip==4.19.8
 six==1.11.0
 statsmodels==0.8.0
